@@ -79,6 +79,18 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      console.log('test');
+      var row = this[rowIndex];
+      //iterate through the row
+      //find if there is more than one 1 then return true
+      //otherwise return false
+      var values = {'1':0,'0':0};
+      for (var i=0; i < row.length; i++) {
+        values[row[i]]++;
+      }
+      if (values['1'] > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
