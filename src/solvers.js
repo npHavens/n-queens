@@ -17,10 +17,45 @@
 
 window.findNRooksSolution = function(n) {
   var solution = undefined;
-  var newBoard = new Board({n:n});
+  var newBoard = new Board({n: n});
 
-  newBoard.togglePiece(0,0);
-  solution = newBoard.rows();
+  // define a function called trySolution
+  var trySolution = function(boardObj, piecesLeft, rowIndex, colIndex) {
+
+    //console.log(JSON.stringify(boardObj.rows()), 'piecesLeft = ', piecesLeft)
+  // first arg is current board
+  // secord arg is pieces left
+  // third arg is colIndex
+
+  // base case
+    // check if there are no pieces left
+    if (piecesLeft === 0) {
+    // if yes, solution = newBoard.rows();
+      return boardObj.rows();
+    }
+  // iterate over newBoard
+    for (var rowNum = rowIndex; rowNum < boardObj.rows().length; rowNum++) {
+      // iterate over row
+      for (var colNum = colIndex; colNum < boardObj.rows()[rowNum].length; colNum++) {
+        //debugger;
+        // togglePiece at colIndex
+        boardObj.togglePiece(rowNum, colNum);
+    // check if there is row or column conflict
+        if (boardObj.hasRowConflictAt(rowNum) || boardObj.hasRowConflictAt(colNum)) {
+          // if there is togglePiece back
+          boardObj.togglePiece(rowNum, colNum);
+          // call trySolution with current board, n, current colIndex+1
+          return trySolution(boardObj, piecesLeft, rowIndex, colNum + 1);
+        } else {
+          // if there is not a row or column conflict, then we keep that piece in the current space
+          return trySolution(boardObj, piecesLeft - 1, rowIndex + 1, colNum + 1);
+          // Make a trySolution call with newBoard, n-1, colIndex+1
+        }
+      }
+    }
+  };
+  // call trySolution with the newBoard, n, 0
+  solution = trySolution(newBoard, n, 0, 0);
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
