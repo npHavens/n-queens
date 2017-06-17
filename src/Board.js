@@ -210,23 +210,19 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
 
-      //reverse entire board
-      //reversedBoard.hasanyMajorDiagonalConflict;
-      for (var i = 0; i < this.rows().length; i++) {
+      // Solution #2:
+      // set variable for first row
+      // check if first row has a length property
+          // if true, iterate over first row
 
-        //console.log(this.rows()[i], this.hasMinorDiagonalConflictAt(i))
-        if (this.hasMinorDiagonalConflictAt(i)) {
-          return true;
-        }
-        var restOfBoard = new Board(this.rows().slice(1));
+          // check if current board has hasMinorDiagonalConflictAt at current colIndex
+            // if true, return true
+          // set variable to define rest of board
+          // do a recursive call of hasAnyMinorDiagonalConflicts on rest of board
+            // if the recursive function returns true, then return true
+            // if false, fall back to 224
+      // if not, return false
 
-        for (var j = 0; j < restOfBoard.rows().length; j++) {
-          if ( restOfBoard.hasMinorDiagonalConflictAt(j) ) {
-            return true;
-          }
-        }
-      }
-      return false; // fixme
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
