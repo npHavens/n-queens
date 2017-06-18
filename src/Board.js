@@ -166,11 +166,15 @@
       var count = 0;
       //iterate through board
 
-      for (var i=0; i < n && colIndex < n; i++, colIndex++) {
+      for (var i = 0; i < n && colIndex < n; i++, colIndex++) {
         var row = this.get(i);
+        //console.log(row[colIndex])
         count += row[colIndex];
+        if (count > 1) {
+          return true;
+        }
       }
-      return count > 1;
+      return false;
     },
 
 
@@ -178,11 +182,12 @@
     hasAnyMajorDiagonalConflicts: function() {
       // Solution #2:
       // set variable for first row
-      var firstRow = this.rows()[0];
+      var length = this.get('n');
+      if (length > 1) {
+
       // check if first row has a length property
-      if (this.rows().length) {
         // if true, iterate over first row
-        for (var i = 0 ; i < firstRow.length; i++) {
+        for (var i = 0 ; i < length - 1; i++) {
           // check if current board has hasMajorDiagonalConflictAt at current colIndex
           if (this.hasMajorDiagonalConflictAt(i)) {
             // if true, return true
@@ -210,24 +215,28 @@
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       var colIndex = minorDiagonalColumnIndexAtFirstRow;
       var count = 0;
-      for (var i = 0 ; i < this.rows().length && colIndex >= 0 ; i++, colIndex--) {
-        var row = this.rows()[i];
+      var length = this.get('n');
+      for (var i = 0 ; i < length && colIndex >= 0 ; i++, colIndex--) {
+        var row = this.get(i);
         count += row[colIndex];
+        if (count > 1) {
+          return true;
+        }
       }
-
-      return count > 1; // fixme
-
+      return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       // Solution #2:
       // set variable for first row
-      var firstRow = this.rows()[0];
+      var rowCount = this.get('n');
+      if (rowCount > 1) {
+        var colCount = this.get('0').length;
       // check if first row has a length property
-      if (this.rows().length) {
+
         // if true, iterate over first row
-        for (var i = 0 ; i < firstRow.length; i++) {
+        for (var i = 1; i < colCount; i++) {
           // check if current board has hasMinorDiagonalConflictAt at current colIndex
           if (this.hasMinorDiagonalConflictAt(i)) {
             // if true, return true
