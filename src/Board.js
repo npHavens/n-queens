@@ -113,10 +113,7 @@
       for (var i = 0; i < this.rows().length; i++) {
         pieceCount+= this.rows()[i][colIndex];
       }
-      if (pieceCount > 1) {
-        return true;
-      }
-      return false; // gsfixme
+      return pieceCount > 1;
     },
 
     // test if any columns on this board contain conflicts
@@ -160,6 +157,7 @@
       var colIndex = majorDiagonalColumnIndexAtFirstRow;
       var count = 0;
       //iterate through board
+
       for (var i=0; i < n && colIndex < n; i++, colIndex++) {
         var row = this.get(i);
         count += row[colIndex];
