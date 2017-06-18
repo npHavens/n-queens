@@ -53,15 +53,14 @@ window.countNQueensSolutions = function(n) {
 };
 
 window.findSolution = function(boardObj, row, n, validator, callBack) {
-
   if (row === n) {
-    callBack();
-    return;
+    return callBack();
+
   }
   for (var i = 0; i < n; i++) {
     boardObj.togglePiece(row, i);
 
-    if (!boardObj.hasRowConflictAt(row) && !boardObj.hasColConflictAt(i)) {
+    if (!boardObj[validator]()) {
       findSolution(boardObj, row + 1, n, validator, callBack);
     }
     boardObj.togglePiece(row, i);
