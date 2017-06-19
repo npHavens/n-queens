@@ -52,7 +52,7 @@ window.countNQueensSolutions = function(n) {
   var solutionCount = 0; //fixme
   var solutionBoard = new Board({n: n});
 
-  findSolution(solutionBoard, 0, n, 'optimizedValidator', function() {
+  findSolution(solutionBoard, 0, n, 'hasAnyQueensConflicts', function() {
     solutionCount++;
   });
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
@@ -62,8 +62,7 @@ window.countNQueensSolutions = function(n) {
 window.findSolution = function(boardObj, row, n, validator, callBack) {
   //debugger;
   if (row === n) {
-    callBack();
-    return;
+    return callBack();
 
   }
   for (var i = 0; i < n; i++) {

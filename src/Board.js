@@ -161,17 +161,18 @@
 
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      var n = this.get('n');
+      var length = this.get('n');
       var colIndex = majorDiagonalColumnIndexAtFirstRow;
       var count = 0;
       //iterate through board
 
-      for (var i = 0; i < n && colIndex < n; i++, colIndex++) {
-        var row = this.get(i);
-        //console.log(row[colIndex])
-        count += row[colIndex];
-        if (count > 1) {
-          return true;
+      for (var i = 0; i < length; i++, colIndex++) {
+        if (colIndex <= length) {
+          var row = this.get(i);
+          count += row[colIndex];
+          if (count > 1) {
+            return true;
+          }
         }
       }
       return false;
@@ -216,11 +217,13 @@
       var colIndex = minorDiagonalColumnIndexAtFirstRow;
       var count = 0;
       var length = this.get('n');
-      for (var i = 0 ; i < length && colIndex >= 0 ; i++, colIndex--) {
-        var row = this.get(i);
-        count += row[colIndex];
-        if (count > 1) {
-          return true;
+      for (var i = 0 ; i < length; i++, colIndex--) {
+        if (colIndex > -1) {
+          var row = this.get(i);
+          count += row[colIndex];
+          if (count > 1) {
+            return true;
+          }
         }
       }
       return false; // fixme
