@@ -52,7 +52,7 @@ window.countNQueensSolutions = function(n) {
   var solutionCount = 0; //fixme
   var solutionBoard = new Board({n: n});
 
-  findSolution(solutionBoard, 0, n, 'hasAnyQueensConflicts', function() {
+  findSolution(solutionBoard, 0, n, 'optimizedValidator', function() {
     solutionCount++;
   });
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
@@ -60,14 +60,16 @@ window.countNQueensSolutions = function(n) {
 };
 
 window.findSolution = function(boardObj, row, n, validator, callBack) {
+  //debugger;
   if (row === n) {
-    return callBack();
+    callBack();
+    return;
 
   }
   for (var i = 0; i < n; i++) {
     boardObj.togglePiece(row, i);
 
-    if (!boardObj[validator]()) {
+    if (!boardObj[validator](row, i)) {
       findSolution(boardObj, row + 1, n, validator, callBack);
     }
     boardObj.togglePiece(row, i);
