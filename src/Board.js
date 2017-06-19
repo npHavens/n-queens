@@ -166,8 +166,8 @@
       var count = 0;
       //iterate through board
 
-      for (var i = 0; i < length; i++, colIndex++) {
-        if (colIndex <= length) {
+      for (var i = 0; i < length && colIndex < length; i++, colIndex++) {
+        if (colIndex >= 0) {
           var row = this.get(i);
           count += row[colIndex];
           if (count > 1) {
@@ -181,29 +181,14 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      // Solution #2:
-      // set variable for first row
       var length = this.get('n');
-      if (length > 1) {
 
-      // check if first row has a length property
-        // if true, iterate over first row
-        for (var i = 0 ; i < length - 1; i++) {
-          // check if current board has hasMajorDiagonalConflictAt at current colIndex
-          if (this.hasMajorDiagonalConflictAt(i)) {
-            // if true, return true
-            return true;
-          }
-          // set variable to define rest of board
-          var restOfBoard = new Board(this.rows().slice(1));
-          // do a recursive call of hasAnyMajorDiagonalConflicts on rest of board
-          if (restOfBoard.hasAnyMajorDiagonalConflicts()) {
-            return true;
-          }
-          // if the recursive function returns true, then return true
-          // if false, fall back to 224
+      for (var i = 1 - length; i < length; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
         }
       }
+
       // if not, return false
       return false;
     },
@@ -217,8 +202,8 @@
       var colIndex = minorDiagonalColumnIndexAtFirstRow;
       var count = 0;
       var length = this.get('n');
-      for (var i = 0 ; i < length; i++, colIndex--) {
-        if (colIndex > -1) {
+      for (var i = 0 ; i < length && colIndex >= 0; i++, colIndex--) {
+        if (colIndex < length) {
           var row = this.get(i);
           count += row[colIndex];
           if (count > 1) {
@@ -233,26 +218,10 @@
     hasAnyMinorDiagonalConflicts: function() {
       // Solution #2:
       // set variable for first row
-      var rowCount = this.get('n');
-      if (rowCount > 1) {
-        var colCount = this.get('0').length;
-      // check if first row has a length property
-
-        // if true, iterate over first row
-        for (var i = 1; i < colCount; i++) {
-          // check if current board has hasMinorDiagonalConflictAt at current colIndex
-          if (this.hasMinorDiagonalConflictAt(i)) {
-            // if true, return true
-            return true;
-          }
-          // set variable to define rest of board
-          var restOfBoard = new Board(this.rows().slice(1));
-          // do a recursive call of hasAnyMinorDiagonalConflicts on rest of board
-          if (restOfBoard.hasAnyMinorDiagonalConflicts()) {
-            return true;
-          }
-          // if the recursive function returns true, then return true
-          // if false, fall back to 224
+      var length = this.get('n');
+      for (var i = (length * 2) - 1; i >= 0; i--) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
         }
       }
       // if not, return false
