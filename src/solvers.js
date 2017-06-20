@@ -15,9 +15,9 @@
 
 
 
-window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
-  var solutionBoard = new Board({n: n});
+window.findNRooksSolution = n => {
+  let solution = undefined; //fixme
+  const solutionBoard = new Board({n: n});
 
   solution = findSolution(solutionBoard, 0, n, 'hasAnyRooksConflicts', function() {
     return solutionBoard.rows().map(function(row) {

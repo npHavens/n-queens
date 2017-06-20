@@ -97,7 +97,7 @@
     },
 
     // test if any rows on this board contain conflicts
-    hasAnyRowConflicts: function() {
+    hasAnyRowConflicts: function() { //O(n^2)
       const length = this.get('n');
       for (let i = 0; i < length; i++) {
         if (this.hasRowConflictAt(i)) {
@@ -113,12 +113,12 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
-    hasColConflictAt: function(colIndex) {
+    hasColConflictAt: function(colIndex) { //O(n)
       let pieceCount = 0;
       const length = this.get('n');
 
       for (let i = 0; i < length; i++) {
-        pieceCount+= this.get(i)[colIndex];
+        pieceCount += this.get(i)[colIndex];
         if (pieceCount > 1) {
           return true;
         }
@@ -127,7 +127,7 @@
     },
 
     // test if any columns on this board contain conflicts
-    hasAnyColConflicts: function() {
+    hasAnyColConflicts: function() { //O(n^2)
       const length = this.get('n');
 
       for (let i = 0; i < length; i++) {
@@ -146,7 +146,7 @@
     // test if a specific major diagonal on this board contains a conflict
 
 
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) { //O(n)
       const length = this.get('n');
       let colIndex = majorDiagonalColumnIndexAtFirstRow;
       let count = 0;
@@ -165,7 +165,7 @@
 
 
     // test if any major diagonals on this board contain conflicts
-    hasAnyMajorDiagonalConflicts: function() {
+    hasAnyMajorDiagonalConflicts: function() { //O(n^2)
       const length = this.get('n');
 
       for (let i = 1 - length; i < length; i++) {
@@ -183,11 +183,11 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) { //O(n)
       let colIndex = minorDiagonalColumnIndexAtFirstRow;
       let count = 0;
       const length = this.get('n');
-      for (let i = 0 ; i < length && colIndex >= 0; i++, colIndex--) {
+      for (let i = 0; i < length && colIndex >= 0; i++, colIndex--) {
         if (colIndex < length) {
           const row = this.get(i);
           count += row[colIndex];
@@ -200,7 +200,7 @@
     },
 
     // test if any minor diagonals on this board contain conflicts
-    hasAnyMinorDiagonalConflicts: function() {
+    hasAnyMinorDiagonalConflicts: function() { //O(n^2)
       const length = this.get('n');
       for (let i = (length * 2) - 1; i >= 0; i--) {
         if (this.hasMinorDiagonalConflictAt(i)) {
